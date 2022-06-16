@@ -1,0 +1,105 @@
+<!-- I have used bootstrap for this project -->
+<html>
+    <head>
+        <title>
+            <%=title%>
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/home.css">
+    </head>
+    <body>
+        <!-- App Heading -->
+        <div id="app-heading" class="jumbotron text-center" style="background-color:lavender" >
+            <h1><i class="fa-solid fa-list-check"></i> My Todo App</h1>
+            <p>Manage Tasks With Ease</p>
+        </div>
+        <!--Input Form -->
+        <form name="myForm" action="/create-task" method="post" id="add">
+            <div class="form-group row"></div>
+                <div class="col-lg-12" style="background-color:lavender;">
+                    <label for="task_desc">Description:</label>
+                    <input type="text" name="desc" id="task_desc" autocomplete="off" placeholder="What do you need to do?" class="form-control well"  required>
+                </div>
+                <div class="col-lg-6" style="background-color:lavender;">
+                    <label for="due-date">Due Date:</label>
+                    <input type="date" name="dd" id="due-date" placeholder="dd/mm/yyyy" class="form-control well" required>               
+                </div>
+                <div class="col-lg-6" style="background-color:lavender;">
+                    <label for="browsers">Category:</label>
+                    <input  name="category" list="browsers" class="form-control well" required autocomplete="off">
+                    <datalist  id="browsers" >
+                        <!-- <option value="Choose a Category"> -->
+                        <option value="Work">
+                        <option value="Gym">
+                        <option value="Coding">
+                        <option value="Study">
+                        <option value="Others">
+                    </datalist>
+                </div> 
+            </div>
+        </form>
+        <!-- Add Button -->
+        <div id="button-add" class="container button">
+            <button type="submit" form="add" class=".btn-primary btn-1" onclick="AddConfirm()">
+                <i class="fa-solid fa-plus"></i> Add
+            </button>
+        </div>
+
+        <!-- Tasks Displayed -->
+        <div class="container">
+                <% for(let i of todo_list){%>
+                    <div  class=" box-task">
+                        <ul style="list-style-type:none;">
+                            <li>
+                                <div class="row task">
+                                    <i class="fa-solid fa-play"></i>
+                                    <div class="col-lg-12">
+                                        Task <i class="fa-solid fa-briefcase"></i> :<%=i.desc%>
+                                    </div>
+                                    <div class="col-lg-4">
+                                       Task Type: <%=i.category%>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        Due Date <i class="fa-solid fa-hourglass-start"></i>: <%=i.dd%>
+                                    </div>
+                                    <a href="/delete-task/?id=<%= i._id %>" Onclick="ConfirmDelete();" class="col-lg-4">
+                                        <i class="fa-solid fa-trash-can .dustbin"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                   </div>
+                <%}%> 
+        </div>
+        <script src="https://kit.fontawesome.com/a2d402d930.js" crossorigin="anonymous"></script>
+        <!-- Javascript -->
+        <script>
+            // function created to handle input validations
+            function AddConfirm(){
+                var x=document.forms["myForm"]["desc"].value;
+                var y=document.forms["myForm"]["category"].value;
+                var z=document.forms["myForm"]["dd"].value;
+                // console.log(z);
+                if(x==""){
+                    alert('Task Description must be filled');
+                    return;
+                };
+                if (y==""){
+                    alert('Category must be filled');
+                    return;
+                };
+                if (z==""){
+                    alert('Due Date must be filled');
+                    return;
+                };
+                alert('Task Added Successfully!');
+            };
+            // function created to alert the user about deleting a task
+            function ConfirmDelete(){
+                alert('Task Deleted!');
+                return;
+            };
+        </script>
+    </body>
+</html>
